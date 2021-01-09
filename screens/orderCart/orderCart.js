@@ -1,16 +1,18 @@
 import React from "react";
 import {View, Text,SafeAreaView,TouchableOpacity,Image, FlatList } from "react-native";
 import { connect } from "react-redux";
-import { toggleCartHidden } from '../../redux/actions';
-import { icons, COLORS, SIZES, FONTS,images } from '../../constants'
-import CartView from '../cartView/cartView'
+
+import { icons, COLORS, SIZES, FONTS,images } from '../../constants';
+import CartView from '../cartView/cartView';
 import { useRoute } from '@react-navigation/native';
-import { useSelector } from 'react-redux'
-import cartReducer from "../../redux/reducer";
+import cartReducer from '../../redux/reducer';
+import { useState } from "react";
+import * as addAction from '../../redux/actions' ;
 
 const orderCart = ({ navigation, props }) => {
+  const {cartItems} = useState();
   const route = useRoute();
-  const cartItems = useSelector(state => cartItems)
+  
 function renderHeader() {
   return (
       <View style={{flexDirection:'row'}}>
@@ -75,6 +77,21 @@ function renderHeader() {
   )
 }
 
+function _renderItem() {
+<CartView source={images.chicago_hot_dog}/>
+}
+
+function renderCartItem(){
+  return(
+<FlatList 
+     data={cartItems}
+     keyExtractor={({item, index}) => item.id}
+     renderItem={_renderItem}
+     />
+     )
+  }
+
+
 
 
 function renderOrder(){
@@ -138,17 +155,9 @@ justifyContent: 'center',
   return(
     <View style={{flex:1, backgroundColor:'white'}}>
      {renderHeader()}
-     <FlatList 
-     data={cartItems}
-     keyExtractor={({item, index}) => index.toString()}
-     renderItem={({item}) => (
-       
-      <CartView source={item.photo} />
-       
-     )}
-     />
      
-     
+     <CartView source={images.noodle_shop}/>
+     {renderCartItem()}
     
      {renderOrder()}
     </View>
@@ -156,12 +165,21 @@ justifyContent: 'center',
   
 }
 
-const mapDispatchToProps = dispatch => ({
-  toggleCartHidden: () => dispatch(toggleCartHidden())
-});
+
+
+const mapStateToProps = (state) =>{
+  return { 
+    cartItems: state.cartReducer.cartItems
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItem: () => dispatch(addAction.addItem())
+  }
+}
 
 
 
 
-
-export default connect(null,mapDispatchToProps)(orderCart);
+export default connect(mapStateToProps,mapDispatchToProps)(orderCart);

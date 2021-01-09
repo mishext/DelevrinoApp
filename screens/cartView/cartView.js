@@ -6,7 +6,7 @@ import { useRoute } from '@react-navigation/native';
 
 export default function CartView(props){
   // const route = useRoute();
-  const {source, text1, text2, price} = props;
+  const {source, Category} = props;
 
     return(
 
@@ -22,12 +22,12 @@ export default function CartView(props){
              <View>
              {/* Crispy Cheese Burger */}
             <View style={{left:6,flex:1, width:245}}>
-                <Text style={{fontSize:23, fontWeight:'bold', }} TextName={text1}/>
+                <Text style={{fontSize:23, fontWeight:'bold', }} >sssss</Text>
                 {/* A cheeseburger is a hamburger topped with cheese */}
-                <Text style={{fontSize:13, color:'gray', }} TextDesc={text2} />
+                <Text style={{fontSize:13, color:'gray', }}>sssssss</Text>
             </View>
             <View style={{flexDirection:'row', left:6,justifyContent:'space-between', bottom:0}}>
-               <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} price={price}/>
+               <Text style={{fontSize:25, fontWeight:'bold', color: COLORS.primary}} >23$</Text>
 
                <View style={{flexDirection:'row'}}>
                    <TouchableOpacity 

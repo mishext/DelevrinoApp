@@ -5,6 +5,8 @@ import { icons, COLORS, SIZES, FONTS } from '../../constants';
 import styles from './styles';
 import {addItem} from '../../redux/actions'
 import { useRoute } from '@react-navigation/native';
+import * as addAction from '../../redux/actions' ;
+
 
 const Restaurant = ({ route, navigation }) => {
  
@@ -229,11 +231,21 @@ function renderOrder(){
 //   addItem: item => dispatch(addItem(item))
 // });
 
-function mapStateToProps (state)  {
-return {
-addItem: item => state(addItem(item))
-}
+// function mapStateToProps (state)  {
+// return {
+// addItem: item => state(addItem(item))
+// }
+// }
+const mapStateToProps = (state) =>{
+  return { 
+    cartItems: state.cartReducer.cartItems
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItem: () => dispatch(addAction.addItem())
+  }
 }
 
-
-export default connect(mapStateToProps)(Restaurant);
+export default connect(mapStateToProps,mapDispatchToProps)(Restaurant);
